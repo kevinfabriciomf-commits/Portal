@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pequeños Sueños | Ropa de Bebé Premium Honduras</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #a8dadc; /* Azul pastel suave */
+            --accent: #457b9d;  /* Azul profundo confiable */
+            --dark: #1d3557;    /* Texto y títulos */
+            --light: #f1faee;   /* Fondo suave */
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; background-color: var(--light); color: var(--dark); line-height: 1.6; overflow-x: hidden; }
+        
+        /* Navegación */
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--accent); text-decoration: none; font-weight: 700; }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; font-size: 0.95rem; transition: var(--transition); }
+        .nav-links a:hover { color: var(--accent); }
+        
+        .cart-trigger { position: relative; cursor: pointer; font-size: 1.3rem; color: var(--accent); transition: var(--transition); }
+        .cart-trigger:hover { transform: scale(1.1); }
+        .cart-count { 
+            position: absolute; top: -8px; right: -10px; 
+            background: #e63946; color: white; 
+            font-size: 0.7rem; padding: 3px 7px; border-radius: 50%; font-weight: 700;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 85vh;
+            background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.2)), url('https://images.unsplash.com/photo-1515488764276-beab7607c1e6?q=80&w=2000') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 10%;
+        }
+        .hero-card { 
+            background: rgba(255, 255, 255, 0.9); 
+            padding: 3.5rem; 
+            border-radius: 40px; 
+            max-width: 550px; 
+            box-shadow: var(--shadow);
+            animation: slideIn 1s ease-out;
+        }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 3.2rem; line-height: 1.1; margin-bottom: 1.5rem; color: var(--dark); }
+        .btn-main { 
+            background: var(--accent); color: white; padding: 1.1rem 2.5rem; 
+            border-radius: 50px; text-decoration: none; font-weight: 600; 
+            display: inline-block; transition: var(--transition); border: none; cursor: pointer;
+        }
+        .btn-main:hover { background: var(--dark); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(69, 123, 157, 0.3); }
+
+        /* Tienda */
+        section { padding: 6rem 8%; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--dark); }
+        
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
+        .product-card { 
+            background: var(--white); border-radius: 25px; overflow: hidden; 
+            box-shadow: var(--shadow); transition: var(--transition); position: relative; border: 1px solid rgba(0,0,0,0.02);
+        }
+        .product-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .product-img { width: 100%; height: 350px; object-fit: cover; }
+        .product-content { padding: 1.8rem; }
+        .product-tag { 
+            position: absolute; top: 15px; left: 15px; background: rgba(255,255,255,0.95); 
+            color: var(--accent); padding: 6px 15px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+        }
+        .product-price { font-size: 1.4rem; font-weight: 600; color: var(--accent); margin: 0.8rem 0; }
+        .btn-add { 
+            width: 100%; padding: 1rem; background: var(--light); border: 2px solid var(--primary); 
+            border-radius: 15px; cursor: pointer; transition: var(--transition); font-weight: 600; color: var(--accent);
+        }
+        .btn-add:hover { background: var(--primary); color: white; }
+
+        /* Carrito Modal */
+        .cart-sidebar {
+            position: fixed; right: -100%; top: 0; width: 420px; height: 100%;
+            background: white; z-index: 2000; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); 
+            padding: 2.5rem; box-shadow: -15px 0 40px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column;
+        }
+        .cart-sidebar.active { right: 0; }
+        .cart-items { flex: 1; overflow-y: auto; margin-top: 2rem; }
+        .cart-item { display: flex; gap: 1.2rem; margin-bottom: 1.5rem; align-items: center; background: #fafafa; padding: 1rem; border-radius: 15px; }
+        .cart-item img { width: 70px; height: 70px; border-radius: 12px; object-fit: cover; }
+        .checkout-btn { 
+            background: #25d366; color: white; width: 100%; padding: 1.2rem; 
+            border-radius: 15px; border: none; font-size: 1.1rem; font-weight: 700; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px;
+            transition: var(--transition);
+        }
+        .checkout-btn:hover { background: #128c7e; transform: scale(1.02); }
+
+        /* Quienes Somos */
+        .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; background: var(--white); }
+        .about-img { border-radius: 30px; width: 100%; height: 500px; object-fit: cover; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .cart-sidebar { width: 100%; }
+            .about-section { grid-template-columns: 1fr; }
+            .hero { justify-content: center; text-align: center; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">Pequeños Sueños</a>
+        <ul class="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#catalogo">Catálogo</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <div class="cart-trigger" onclick="toggleCart()">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <section class="hero" id="inicio">
+        <div class="hero-card">
+            <h1>Moda Infantil Importada con Amor</h1>
+            <p style="margin-bottom: 2rem; color: #555;">Descubre nuestra colección exclusiva de ropa para bebés. Calidad premium de marcas internacionales, disponible hoy en Honduras.</p>
+            <a href="#catalogo" class="btn-main">Ver Catálogo Completo</a>
+        </div>
+    </section>
+
+    <section id="catalogo">
+        <div class="section-header">
+            <h2>Colección Recién Llegada</h2>
+            <p>Prendas seleccionadas por su suavidad y estilo único.</p>
+        </div>
+        
+        <div class="product-grid" id="productGrid">
+            </div>
+    </section>
+
+    <section id="nosotros" class="about-section">
+        <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=1000" class="about-img" alt="Bebé feliz">
+        <div>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.8rem; margin-bottom: 1.5rem;">Calidad que inspira confianza</h2>
+            <p>En <b>Pequeños Sueños</b> somos expertos en importación directa. Cada pieza en nuestra tienda ha pasado por un control de calidad riguroso para asegurar que solo lo mejor toque la piel de tu bebé.</p>
+            <br>
+            <p>Hacemos envíos rápidos y seguros a todo el territorio nacional, brindando un respaldo personalizado desde San Pedro Sula hasta cada rincón de Honduras.</p>
+        </div>
+    </section>
+
+    <section id="contacto" style="text-align: center;">
+        <div class="section-header">
+            <h2>¿Deseas atención personalizada?</h2>
+            <p>Escríbenos para consultas de tallas, colores o envíos especiales.</p>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+            <a href="https://wa.me/50497335686" class="btn-main" style="background: #25d366; display: flex; align-items: center; gap: 10px;">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Directo
+            </a>
+            <div style="text-align: left; border-left: 2px solid var(--primary); padding-left: 2rem;">
+                <p><strong>Ubicación:</strong> San Pedro Sula, Honduras</p>
+                <p><strong>Email:</strong> ventas@pequenosuenos.hn</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem;">Tu Carrito</h3>
+            <i class="fa-solid fa-xmark" style="font-size: 1.5rem; cursor: pointer;" onclick="toggleCart()"></i>
+        </div>
+        
+        <div class="cart-items" id="cartContainer">
+            </div>
+
+        <div style="margin-top: 2rem; border-top: 2px solid #eee; padding-top: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem;">
+                <span>Total:</span>
+                <span id="cartTotalText">L 0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="sendWhatsAppOrder()">
+                <i class="fa-brands fa-whatsapp"></i> Finalizar por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Simulación de Base de Datos
+        const productos = [
+            { id: 1, nombre: "Mameluco Nube de Algodón", precio: 450, estilo: "Pijama", marca: "Carter's", img: "https://images.unsplash.com/photo-1544126592-807daa2b565b?q=80&w=500", tag: "Importado" },
+            { id: 2, nombre: "Set Safari 3 Piezas", precio: 820, estilo: "Casual", marca: "OshKosh", img: "https://images.unsplash.com/photo-1622290291165-d341f1938b8a?q=80&w=500", tag: "Nuevo" },
+            { id: 3, nombre: "Vestido Gala Rosa", precio: 950, estilo: "Elegante", marca: "Ralph Lauren Kids", img: "https://images.unsplash.com/photo-1519702581638-3f50c60bc997?q=80&w=500", tag: "Exclusivo" },
+            { id: 4, nombre: "Zapatitos de Cuna Soft", precio: 380, estilo: "Calzado", marca: "Gerber", img: "https://images.unsplash.com/photo-1560506840-ec148e82a604?q=80&w=500", tag: "Disponible" },
+            { id: 5, nombre: "Chaqueta Acolchada Invierno", precio: 1200, estilo: "Abrigo", marca: "Gap Baby", img: "https://images.unsplash.com/photo-1617331140180-e8262094733a?q=80&w=500", tag: "Importado" },
+            { id: 6, nombre: "Body Pack Essential (5)", precio: 750, estilo: "Básico", marca: "Carter's", img: "https://images.unsplash.com/photo-1555009393-f20bdb245c4d?q=80&w=500", tag: "Best Seller" }
+        ];
+
+        let carrito = JSON.parse(localStorage.getItem('ps_cart')) || [];
+
+        // Renderizar Catálogo
+        function renderProductos() {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = productos.map(p => `
+                <div class="product-card">
+                    <span class="product-tag">${p.tag}</span>
+                    <img src="${p.img}" class="product-img" alt="${p.nombre}">
+                    <div class="product-content">
+                        <small style="color: var(--accent); font-weight: 600;">${p.marca}</small>
+                        <h3 style="margin: 0.5rem 0; font-size: 1.15rem;">${p.nombre}</h3>
+                        <p style="font-size: 0.85rem; color: #666;">${p.estilo}</p>
+                        <p class="product-price">L ${p.precio.toFixed(2)}</p>
+                        <button class="btn-add" onclick="agregarAlCarrito(${p.id})">Agregar a la Bolsa</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Lógica Carrito
+        function agregarAlCarrito(id) {
+            const prod = productos.find(p => p.id === id);
+            const enCarrito = carrito.find(item => item.id === id);
+            
+            if(enCarrito) enCarrito.cantidad++;
+            else carrito.push({...prod, cantidad: 1});
+            
+            saveAndUI();
+            toggleCart(true);
+        }
+
+        function saveAndUI() {
+            localStorage.setItem('ps_cart', JSON.stringify(carrito));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartContainer');
+            const totalText = document.getElementById('cartTotalText');
+            const countLabel = document.getElementById('cart-count');
+            
+            let total = 0;
+            let totalItems = 0;
+
+            container.innerHTML = carrito.map(item => {
+                total += item.precio * item.cantidad;
+                totalItems += item.cantidad;
+                return `
+                    <div class="cart-item">
+                        <img src="${item.img}">
+                        <div style="flex:1">
+                            <h4 style="font-size:0.9rem">${item.nombre}</h4>
+                            <p style="font-size:0.8rem">L ${item.precio} x ${item.cantidad}</p>
+                        </div>
+                        <div style="display:flex; gap: 8px;">
+                            <button onclick="changeQty(${item.id}, -1)" style="border:none; cursor:pointer; width:25px; border-radius:5px">-</button>
+                            <button onclick="changeQty(${item.id}, 1)" style="border:none; cursor:pointer; width:25px; border-radius:5px">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            totalText.innerText = `L ${total.toFixed(2)}`;
+            countLabel.innerText = totalItems;
+        }
+
+        function changeQty(id, change) {
+            const item = carrito.find(i => i.id === id);
+            item.cantidad += change;
+            if(item.cantidad <= 0) carrito = carrito.filter(i => i.id !== id);
+            saveAndUI();
+        }
+
+        function toggleCart(open = false) {
+            const sidebar = document.getElementById('cartSidebar');
+            if(open) sidebar.classList.add('active');
+            else sidebar.classList.toggle('active');
+        }
+
+        // WhatsApp Checkout
+        function sendWhatsAppOrder() {
+            if(carrito.length === 0) return alert("Tu carrito está vacío.");
+
+            let msg = "Hola Pequeños Sueños 😊\nMe gustaría cotizar disponibilidad de estos artículos para mi bebé:\n\n";
+            let total = 0;
+
+            carrito.forEach((item, index) => {
+                msg += `${index + 1}. *${item.nombre}*\n`;
+                msg += `   Marca: ${item.marca} | Cant: ${item.cantidad}\n`;
+                msg += `   Precio unit: L ${item.precio}\n\n`;
+                total += item.precio * item.cantidad;
+            });
+
+            msg += `*Total estimado: L ${total.toFixed(2)}*\n\n`;
+            msg += "¿Podrían confirmarme si tienen existencia y el costo del envío? ¡Muchas gracias! ✨";
+
+            const url = `https://wa.me/50497335686?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        }
+
+        // Inicio
+        renderProductos();
+        updateCartUI();
+    </script>
+</body>
+</html>
